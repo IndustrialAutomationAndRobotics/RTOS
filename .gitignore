@@ -1,0 +1,6 @@
+# Ignore list for proteus
+
+# backup files
+
+*.pdsbak
+*.workspace

@@ -50,6 +50,18 @@ uint8_t outputPin[] = {
 	motorBEn,
 };
 
+uint8_t ledPattern[] = {
+
+	led1,
+	led2,
+	led3,
+	led4,
+	led5,
+	led6,
+	led7,
+	led8,
+};
+
 uint8_t inputPin[] = {
 
 	buttonLeft,
@@ -89,11 +101,11 @@ void led(void *prParameters) {
 
 	for (;;) {
 
-		digitalWrite(outputPin[i], HIGH);
-		digitalWrite(outputPin[j], HIGH);
+		digitalWrite(ledPattern[i], HIGH);
+		digitalWrite(ledPattern[j], HIGH);
 		vTaskDelay(20);
-		digitalWrite(outputPin[i], LOW);
-		digitalWrite(outputPin[j], LOW);
+		digitalWrite(ledPattern[i], LOW);
+		digitalWrite(ledPattern[j], LOW);
 
 		if (i == 0) {
 			i = 3;

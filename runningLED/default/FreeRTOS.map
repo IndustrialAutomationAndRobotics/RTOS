@@ -129,7 +129,7 @@ LOAD d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1650
+.text           0x00000000     0x1668
  *(.vectors)
  .vectors       0x00000000       0x5c d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm169.o
                 0x00000000                __vectors
@@ -257,34 +257,34 @@ LOAD d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x000014bc                __vector_7
                 0x000014c2                vPortYield
                 0x000012fe                pxPortInitialiseStack
- .text          0x00001574       0x9a Main_Prog.o
-                0x000015da                main
+ .text          0x00001574       0xb2 Main_Prog.o
+                0x000015f2                main
                 0x00001574                LED
- .text          0x0000160e        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text          0x0000160e        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
- .text          0x0000160e        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
- .text          0x0000160e        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy.o)
- .text          0x0000160e        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memset.o)
- .text          0x0000160e        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncpy.o)
-                0x0000160e                . = ALIGN (0x2)
+ .text          0x00001626        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text          0x00001626        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text          0x00001626        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text          0x00001626        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy.o)
+ .text          0x00001626        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memset.o)
+ .text          0x00001626        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncpy.o)
+                0x00001626                . = ALIGN (0x2)
  *(.text.*)
- .text.libgcc   0x0000160e        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x0000160e        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
- .text.libgcc   0x0000160e        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x00001626        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x00001626        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text.libgcc   0x00001626        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
  .text.avr-libc
-                0x0000160e       0x12 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy.o)
-                0x0000160e                memcpy
+                0x00001626       0x12 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy.o)
+                0x00001626                memcpy
  .text.avr-libc
-                0x00001620        0xe d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memset.o)
-                0x00001620                memset
+                0x00001638        0xe d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memset.o)
+                0x00001638                memset
  .text.avr-libc
-                0x0000162e       0x1e d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncpy.o)
-                0x0000162e                strncpy
-                0x0000164c                . = ALIGN (0x2)
+                0x00001646       0x1e d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncpy.o)
+                0x00001646                strncpy
+                0x00001664                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000164c        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x0000164c                exit
-                0x0000164c                _exit
+ .fini9         0x00001664        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x00001664                exit
+                0x00001664                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -303,11 +303,11 @@ LOAD d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000164c        0x4 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x00001664        0x4 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001650                _etext = .
+                0x00001668                _etext = .
 
-.data           0x00800100        0x6 load address 0x00001650
+.data           0x00800100        0x6 load address 0x00001668
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm169.o
@@ -355,8 +355,8 @@ LOAD d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.bss*)
  *(COMMON)
                 0x00800480                PROVIDE (__bss_end, .)
-                0x00001650                __data_load_start = LOADADDR (.data)
-                0x00001656                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00001668                __data_load_start = LOADADDR (.data)
+                0x0000166e                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800480        0x0
                 0x00800480                PROVIDE (__noinit_start, .)

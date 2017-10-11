@@ -43,7 +43,9 @@ OBJECTS = firstProgram.o
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) firstProgram.hex firstProgram.eep firstProgram.lss## Compile
+all: $(TARGET) firstProgram.hex firstProgram.eep firstProgram.lss size
+
+## Compile
 firstProgram.o: ../firstProgram.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
@@ -59,6 +61,10 @@ $(TARGET): $(OBJECTS)
 
 %.lss: $(TARGET)
 	avr-objdump -h -S $< > $@
+
+size: ${TARGET}
+	@echo
+	@avr-size -C --mcu=${MCU} ${TARGET}
 
 ## Clean target
 .PHONY: clean

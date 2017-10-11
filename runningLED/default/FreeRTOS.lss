@@ -3,29 +3,29 @@ FreeRTOS.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000006  00800100  00001650  000016e4  2**0
+  0 .data         00000006  00800100  00001668  000016fc  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00001650  00000000  00000000  00000094  2**1
+  1 .text         00001668  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000037a  00800106  00800106  000016ea  2**0
+  2 .bss          0000037a  00800106  00800106  00001702  2**0
                   ALLOC
-  3 .debug_aranges 000000e0  00000000  00000000  000016ea  2**0
+  3 .debug_aranges 000000e0  00000000  00000000  00001702  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_pubnames 0000049d  00000000  00000000  000017ca  2**0
+  4 .debug_pubnames 0000049d  00000000  00000000  000017e2  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00001bec  00000000  00000000  00001c67  2**0
+  5 .debug_info   00001bec  00000000  00000000  00001c7f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000926  00000000  00000000  00003853  2**0
+  6 .debug_abbrev 00000926  00000000  00000000  0000386b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000186f  00000000  00000000  00004179  2**0
+  7 .debug_line   0000186f  00000000  00000000  00004191  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000380  00000000  00000000  000059e8  2**2
+  8 .debug_frame  00000380  00000000  00000000  00005a00  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000ce4  00000000  00000000  00005d68  2**0
+  9 .debug_str    00000ce4  00000000  00000000  00005d80  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000e08  00000000  00000000  00006a4c  2**0
+ 10 .debug_loc    00000e08  00000000  00000000  00006a64  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000018  00000000  00000000  00007854  2**0
+ 11 .debug_ranges 00000018  00000000  00000000  0000786c  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -67,7 +67,7 @@ Disassembly of section .text:
       68:	11 e0       	ldi	r17, 0x01	; 1
       6a:	a0 e0       	ldi	r26, 0x00	; 0
       6c:	b1 e0       	ldi	r27, 0x01	; 1
-      6e:	e0 e5       	ldi	r30, 0x50	; 80
+      6e:	e8 e6       	ldi	r30, 0x68	; 104
       70:	f6 e1       	ldi	r31, 0x16	; 22
       72:	02 c0       	rjmp	.+4      	; 0x78 <.do_copy_data_start>
 
@@ -93,8 +93,8 @@ Disassembly of section .text:
       88:	a0 38       	cpi	r26, 0x80	; 128
       8a:	b1 07       	cpc	r27, r17
       8c:	e1 f7       	brne	.-8      	; 0x86 <.do_clear_bss_loop>
-      8e:	0e 94 ed 0a 	call	0x15da	; 0x15da <main>
-      92:	0c 94 26 0b 	jmp	0x164c	; 0x164c <_exit>
+      8e:	0e 94 f9 0a 	call	0x15f2	; 0x15f2 <main>
+      92:	0c 94 32 0b 	jmp	0x1664	; 0x1664 <_exit>
 
 00000096 <__bad_interrupt>:
       96:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -1184,7 +1184,7 @@ static void prvCopyDataFromQueue( xQUEUE * const pxQueue, const void *pvBuffer )
      5f4:	7f 81       	ldd	r23, Y+7	; 0x07
      5f6:	cf 01       	movw	r24, r30
      5f8:	50 e0       	ldi	r21, 0x00	; 0
-     5fa:	0e 94 07 0b 	call	0x160e	; 0x160e <memcpy>
+     5fa:	0e 94 13 0b 	call	0x1626	; 0x1626 <memcpy>
 		if( pxQueue->uxMessagesWaiting > ( unsigned portBASE_TYPE ) 0 )
 		{
 			traceQUEUE_RECEIVE_FROM_ISR( pxQueue );
@@ -1271,7 +1271,7 @@ static void prvCopyDataToQueue( xQUEUE *pxQueue, const void *pvItemToQueue, port
      646:	8c 81       	ldd	r24, Y+4	; 0x04
      648:	9d 81       	ldd	r25, Y+5	; 0x05
      64a:	50 e0       	ldi	r21, 0x00	; 0
-     64c:	0e 94 07 0b 	call	0x160e	; 0x160e <memcpy>
+     64c:	0e 94 13 0b 	call	0x1626	; 0x1626 <memcpy>
 		pxQueue->pcWriteTo += pxQueue->uxItemSize;
      650:	8c 8d       	ldd	r24, Y+28	; 0x1c
      652:	2c 81       	ldd	r18, Y+4	; 0x04
@@ -1301,7 +1301,7 @@ static void prvCopyDataToQueue( xQUEUE *pxQueue, const void *pvItemToQueue, port
      672:	8e 81       	ldd	r24, Y+6	; 0x06
      674:	9f 81       	ldd	r25, Y+7	; 0x07
      676:	50 e0       	ldi	r21, 0x00	; 0
-     678:	0e 94 07 0b 	call	0x160e	; 0x160e <memcpy>
+     678:	0e 94 13 0b 	call	0x1626	; 0x1626 <memcpy>
 		pxQueue->pcReadFrom -= pxQueue->uxItemSize;
      67c:	8c 8d       	ldd	r24, Y+28	; 0x1c
      67e:	90 e0       	ldi	r25, 0x00	; 0
@@ -1702,7 +1702,7 @@ static void prvCopyDataFromQueue( xQUEUE * const pxQueue, const void *pvBuffer )
      818:	89 2d       	mov	r24, r9
      81a:	98 2d       	mov	r25, r8
      81c:	50 e0       	ldi	r21, 0x00	; 0
-     81e:	0e 94 07 0b 	call	0x160e	; 0x160e <memcpy>
+     81e:	0e 94 13 0b 	call	0x1626	; 0x1626 <memcpy>
 				/* Remember our read position in case we are just peeking. */
 				pcOriginalReadPosition = pxQueue->pcReadFrom;
 
@@ -3444,7 +3444,7 @@ tskTCB *pxNewTCB;
     10e2:	65 ea       	ldi	r22, 0xA5	; 165
     10e4:	70 e0       	ldi	r23, 0x00	; 0
     10e6:	a6 01       	movw	r20, r12
-    10e8:	0e 94 10 0b 	call	0x1620	; 0x1620 <memset>
+    10e8:	0e 94 1c 0b 	call	0x1638	; 0x1638 <memset>
 {
 	/* Store the function name in the TCB. */
 	#if configMAX_TASK_NAME_LEN > 1
@@ -3456,7 +3456,7 @@ tskTCB *pxNewTCB;
     10f0:	b5 01       	movw	r22, r10
     10f2:	48 e0       	ldi	r20, 0x08	; 8
     10f4:	50 e0       	ldi	r21, 0x00	; 0
-    10f6:	0e 94 17 0b 	call	0x162e	; 0x162e <strncpy>
+    10f6:	0e 94 23 0b 	call	0x1646	; 0x1646 <strncpy>
 	}
 	#endif
 	pxTCB->pcTaskName[ ( unsigned portSHORT ) configMAX_TASK_NAME_LEN - ( unsigned portSHORT ) 1 ] = '\0';
@@ -4354,163 +4354,175 @@ void LED(void *pvParameters){
 
 	while(1){
 	
-		PORTB |= (1<<PB0); //Set bit to high
-    1574:	28 9a       	sbi	0x05, 0	; 5
+		PORTB &= (1<<PB0); //Set bit to high
+    1574:	85 b1       	in	r24, 0x05	; 5
+    1576:	81 70       	andi	r24, 0x01	; 1
+    1578:	85 b9       	out	0x05, r24	; 5
 		vTaskDelay(50);
-    1576:	82 e3       	ldi	r24, 0x32	; 50
-    1578:	90 e0       	ldi	r25, 0x00	; 0
-    157a:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
+    157a:	82 e3       	ldi	r24, 0x32	; 50
+    157c:	90 e0       	ldi	r25, 0x00	; 0
+    157e:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
 		PORTB &= ~(1<<PB0); // Set bit to low
-    157e:	28 98       	cbi	0x05, 0	; 5
+    1582:	28 98       	cbi	0x05, 0	; 5
 		
-		PORTB |= (1<<PB1); //Set bit to high
-    1580:	29 9a       	sbi	0x05, 1	; 5
+		PORTB &= (1<<PB1); //Set bit to high
+    1584:	85 b1       	in	r24, 0x05	; 5
+    1586:	82 70       	andi	r24, 0x02	; 2
+    1588:	85 b9       	out	0x05, r24	; 5
 		vTaskDelay(50);
-    1582:	82 e3       	ldi	r24, 0x32	; 50
-    1584:	90 e0       	ldi	r25, 0x00	; 0
-    1586:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
+    158a:	82 e3       	ldi	r24, 0x32	; 50
+    158c:	90 e0       	ldi	r25, 0x00	; 0
+    158e:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
 		PORTB &= ~(1<<PB1); // Set bit to low
-    158a:	29 98       	cbi	0x05, 1	; 5
+    1592:	29 98       	cbi	0x05, 1	; 5
 		
-		PORTB |= (1<<PB2); //Set bit to high
-    158c:	2a 9a       	sbi	0x05, 2	; 5
-		vTaskDelay(50);
-    158e:	82 e3       	ldi	r24, 0x32	; 50
-    1590:	90 e0       	ldi	r25, 0x00	; 0
-    1592:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
-		PORTB &= ~(1<<PB2); // Set bit to low
-    1596:	2a 98       	cbi	0x05, 2	; 5
-		
-		PORTB |= (1<<PB3); //Set bit to high
-    1598:	2b 9a       	sbi	0x05, 3	; 5
+		PORTB &= (1<<PB2); //Set bit to high
+    1594:	85 b1       	in	r24, 0x05	; 5
+    1596:	84 70       	andi	r24, 0x04	; 4
+    1598:	85 b9       	out	0x05, r24	; 5
 		vTaskDelay(50);
     159a:	82 e3       	ldi	r24, 0x32	; 50
     159c:	90 e0       	ldi	r25, 0x00	; 0
     159e:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
-		PORTB &= ~(1<<PB3); // Set bit to low
-    15a2:	2b 98       	cbi	0x05, 3	; 5
+		PORTB &= ~(1<<PB2); // Set bit to low
+    15a2:	2a 98       	cbi	0x05, 2	; 5
 		
-		PORTB |= (1<<PB4); //Set bit to high
-    15a4:	2c 9a       	sbi	0x05, 4	; 5
+		PORTB |= (1<<PB3); //Set bit to high
+    15a4:	2b 9a       	sbi	0x05, 3	; 5
 		vTaskDelay(50);
     15a6:	82 e3       	ldi	r24, 0x32	; 50
     15a8:	90 e0       	ldi	r25, 0x00	; 0
     15aa:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
-		PORTB &= ~(1<<PB4); // Set bit to low
-    15ae:	2c 98       	cbi	0x05, 4	; 5
+		PORTB &= ~(1<<PB3); // Set bit to low
+    15ae:	2b 98       	cbi	0x05, 3	; 5
 		
-		PORTB |= (1<<PB5); //Set bit to high
-    15b0:	2d 9a       	sbi	0x05, 5	; 5
+		PORTB |= (1<<PB4); //Set bit to high
+    15b0:	2c 9a       	sbi	0x05, 4	; 5
 		vTaskDelay(50);
     15b2:	82 e3       	ldi	r24, 0x32	; 50
     15b4:	90 e0       	ldi	r25, 0x00	; 0
     15b6:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
+		PORTB &= ~(1<<PB4); // Set bit to low
+    15ba:	2c 98       	cbi	0x05, 4	; 5
+		
+		PORTB &= (1<<PB5); //Set bit to high
+    15bc:	85 b1       	in	r24, 0x05	; 5
+    15be:	80 72       	andi	r24, 0x20	; 32
+    15c0:	85 b9       	out	0x05, r24	; 5
+		vTaskDelay(50);
+    15c2:	82 e3       	ldi	r24, 0x32	; 50
+    15c4:	90 e0       	ldi	r25, 0x00	; 0
+    15c6:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
 		PORTB &= ~(1<<PB5); // Set bit to low
-    15ba:	2d 98       	cbi	0x05, 5	; 5
+    15ca:	2d 98       	cbi	0x05, 5	; 5
 		
-		PORTB |= (1<<PB6); //Set bit to high
-    15bc:	2e 9a       	sbi	0x05, 6	; 5
+		PORTB &= (1<<PB6); //Set bit to high
+    15cc:	85 b1       	in	r24, 0x05	; 5
+    15ce:	80 74       	andi	r24, 0x40	; 64
+    15d0:	85 b9       	out	0x05, r24	; 5
 		vTaskDelay(50);
-    15be:	82 e3       	ldi	r24, 0x32	; 50
-    15c0:	90 e0       	ldi	r25, 0x00	; 0
-    15c2:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
+    15d2:	82 e3       	ldi	r24, 0x32	; 50
+    15d4:	90 e0       	ldi	r25, 0x00	; 0
+    15d6:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
 		PORTB &= ~(1<<PB6); // Set bit to low
-    15c6:	2e 98       	cbi	0x05, 6	; 5
+    15da:	2e 98       	cbi	0x05, 6	; 5
 		
-		PORTB |= (1<<PB7); //Set bit to high
-    15c8:	2f 9a       	sbi	0x05, 7	; 5
+		PORTB &= (1<<PB7); //Set bit to high
+    15dc:	85 b1       	in	r24, 0x05	; 5
+    15de:	80 78       	andi	r24, 0x80	; 128
+    15e0:	85 b9       	out	0x05, r24	; 5
 		vTaskDelay(50);
-    15ca:	82 e3       	ldi	r24, 0x32	; 50
-    15cc:	90 e0       	ldi	r25, 0x00	; 0
-    15ce:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
+    15e2:	82 e3       	ldi	r24, 0x32	; 50
+    15e4:	90 e0       	ldi	r25, 0x00	; 0
+    15e6:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
 		PORTB &= ~(1<<PB7); // Set bit to low
-    15d2:	2f 98       	cbi	0x05, 7	; 5
+    15ea:	2f 98       	cbi	0x05, 7	; 5
 		
 
 		taskYIELD();
-    15d4:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
-    15d8:	cd cf       	rjmp	.-102    	; 0x1574 <LED>
+    15ec:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
+    15f0:	c1 cf       	rjmp	.-126    	; 0x1574 <LED>
 
-000015da <main>:
+000015f2 <main>:
 // ######################################################
 
 void LED(void *pvParameters);
 
 int main()
 {
-    15da:	ef 92       	push	r14
-    15dc:	ff 92       	push	r15
-    15de:	0f 93       	push	r16
+    15f2:	ef 92       	push	r14
+    15f4:	ff 92       	push	r15
+    15f6:	0f 93       	push	r16
 	DDRB = 0xFF; // Make port B as OUTPUT
-    15e0:	8f ef       	ldi	r24, 0xFF	; 255
-    15e2:	84 b9       	out	0x04, r24	; 4
+    15f8:	8f ef       	ldi	r24, 0xFF	; 255
+    15fa:	84 b9       	out	0x04, r24	; 4
 
 	xTaskCreate(LED,NULL,STACK_SIZE, NULL, 0, NULL);
-    15e4:	8a eb       	ldi	r24, 0xBA	; 186
-    15e6:	9a e0       	ldi	r25, 0x0A	; 10
-    15e8:	60 e0       	ldi	r22, 0x00	; 0
-    15ea:	70 e0       	ldi	r23, 0x00	; 0
-    15ec:	44 e6       	ldi	r20, 0x64	; 100
-    15ee:	50 e0       	ldi	r21, 0x00	; 0
-    15f0:	20 e0       	ldi	r18, 0x00	; 0
-    15f2:	30 e0       	ldi	r19, 0x00	; 0
-    15f4:	00 e0       	ldi	r16, 0x00	; 0
-    15f6:	ee 24       	eor	r14, r14
-    15f8:	ff 24       	eor	r15, r15
-    15fa:	0e 94 47 08 	call	0x108e	; 0x108e <xTaskCreate>
+    15fc:	8a eb       	ldi	r24, 0xBA	; 186
+    15fe:	9a e0       	ldi	r25, 0x0A	; 10
+    1600:	60 e0       	ldi	r22, 0x00	; 0
+    1602:	70 e0       	ldi	r23, 0x00	; 0
+    1604:	44 e6       	ldi	r20, 0x64	; 100
+    1606:	50 e0       	ldi	r21, 0x00	; 0
+    1608:	20 e0       	ldi	r18, 0x00	; 0
+    160a:	30 e0       	ldi	r19, 0x00	; 0
+    160c:	00 e0       	ldi	r16, 0x00	; 0
+    160e:	ee 24       	eor	r14, r14
+    1610:	ff 24       	eor	r15, r15
+    1612:	0e 94 47 08 	call	0x108e	; 0x108e <xTaskCreate>
 	
 	vTaskStartScheduler();
-    15fe:	0e 94 33 09 	call	0x1266	; 0x1266 <vTaskStartScheduler>
+    1616:	0e 94 33 09 	call	0x1266	; 0x1266 <vTaskStartScheduler>
 		
 
 	return 0;
 }
-    1602:	80 e0       	ldi	r24, 0x00	; 0
-    1604:	90 e0       	ldi	r25, 0x00	; 0
-    1606:	0f 91       	pop	r16
-    1608:	ff 90       	pop	r15
-    160a:	ef 90       	pop	r14
-    160c:	08 95       	ret
+    161a:	80 e0       	ldi	r24, 0x00	; 0
+    161c:	90 e0       	ldi	r25, 0x00	; 0
+    161e:	0f 91       	pop	r16
+    1620:	ff 90       	pop	r15
+    1622:	ef 90       	pop	r14
+    1624:	08 95       	ret
 
-0000160e <memcpy>:
-    160e:	fb 01       	movw	r30, r22
-    1610:	dc 01       	movw	r26, r24
-    1612:	02 c0       	rjmp	.+4      	; 0x1618 <memcpy+0xa>
-    1614:	01 90       	ld	r0, Z+
-    1616:	0d 92       	st	X+, r0
-    1618:	41 50       	subi	r20, 0x01	; 1
-    161a:	50 40       	sbci	r21, 0x00	; 0
-    161c:	d8 f7       	brcc	.-10     	; 0x1614 <memcpy+0x6>
-    161e:	08 95       	ret
+00001626 <memcpy>:
+    1626:	fb 01       	movw	r30, r22
+    1628:	dc 01       	movw	r26, r24
+    162a:	02 c0       	rjmp	.+4      	; 0x1630 <memcpy+0xa>
+    162c:	01 90       	ld	r0, Z+
+    162e:	0d 92       	st	X+, r0
+    1630:	41 50       	subi	r20, 0x01	; 1
+    1632:	50 40       	sbci	r21, 0x00	; 0
+    1634:	d8 f7       	brcc	.-10     	; 0x162c <memcpy+0x6>
+    1636:	08 95       	ret
 
-00001620 <memset>:
-    1620:	dc 01       	movw	r26, r24
-    1622:	01 c0       	rjmp	.+2      	; 0x1626 <memset+0x6>
-    1624:	6d 93       	st	X+, r22
-    1626:	41 50       	subi	r20, 0x01	; 1
-    1628:	50 40       	sbci	r21, 0x00	; 0
-    162a:	e0 f7       	brcc	.-8      	; 0x1624 <memset+0x4>
-    162c:	08 95       	ret
+00001638 <memset>:
+    1638:	dc 01       	movw	r26, r24
+    163a:	01 c0       	rjmp	.+2      	; 0x163e <memset+0x6>
+    163c:	6d 93       	st	X+, r22
+    163e:	41 50       	subi	r20, 0x01	; 1
+    1640:	50 40       	sbci	r21, 0x00	; 0
+    1642:	e0 f7       	brcc	.-8      	; 0x163c <memset+0x4>
+    1644:	08 95       	ret
 
-0000162e <strncpy>:
-    162e:	fb 01       	movw	r30, r22
-    1630:	dc 01       	movw	r26, r24
-    1632:	41 50       	subi	r20, 0x01	; 1
-    1634:	50 40       	sbci	r21, 0x00	; 0
-    1636:	48 f0       	brcs	.+18     	; 0x164a <strncpy+0x1c>
-    1638:	01 90       	ld	r0, Z+
-    163a:	0d 92       	st	X+, r0
-    163c:	00 20       	and	r0, r0
-    163e:	c9 f7       	brne	.-14     	; 0x1632 <strncpy+0x4>
-    1640:	01 c0       	rjmp	.+2      	; 0x1644 <strncpy+0x16>
-    1642:	1d 92       	st	X+, r1
-    1644:	41 50       	subi	r20, 0x01	; 1
-    1646:	50 40       	sbci	r21, 0x00	; 0
-    1648:	e0 f7       	brcc	.-8      	; 0x1642 <strncpy+0x14>
-    164a:	08 95       	ret
+00001646 <strncpy>:
+    1646:	fb 01       	movw	r30, r22
+    1648:	dc 01       	movw	r26, r24
+    164a:	41 50       	subi	r20, 0x01	; 1
+    164c:	50 40       	sbci	r21, 0x00	; 0
+    164e:	48 f0       	brcs	.+18     	; 0x1662 <strncpy+0x1c>
+    1650:	01 90       	ld	r0, Z+
+    1652:	0d 92       	st	X+, r0
+    1654:	00 20       	and	r0, r0
+    1656:	c9 f7       	brne	.-14     	; 0x164a <strncpy+0x4>
+    1658:	01 c0       	rjmp	.+2      	; 0x165c <strncpy+0x16>
+    165a:	1d 92       	st	X+, r1
+    165c:	41 50       	subi	r20, 0x01	; 1
+    165e:	50 40       	sbci	r21, 0x00	; 0
+    1660:	e0 f7       	brcc	.-8      	; 0x165a <strncpy+0x14>
+    1662:	08 95       	ret
 
-0000164c <_exit>:
-    164c:	f8 94       	cli
+00001664 <_exit>:
+    1664:	f8 94       	cli
 
-0000164e <__stop_program>:
-    164e:	ff cf       	rjmp	.-2      	; 0x164e <__stop_program>
+00001666 <__stop_program>:
+    1666:	ff cf       	rjmp	.-2      	; 0x1666 <__stop_program>

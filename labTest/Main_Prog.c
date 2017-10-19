@@ -57,16 +57,16 @@ int main()
 //Modify based on the given pseudocode
 void LED (void *pvParameters) {
 	while(1) {
-        PORTB &= ~(1<<PB2);
-        PORTB |= (1<<PB3);
-        PORTB |= (1<<PB4);
-        PORTB &= ~(1<<PB5);
-        vTaskDelay(20);
-		PORTB |= (1<<PB2);
-        PORTB &= ~(1<<PB3);
-        PORTB &= ~(1<<PB4);
-		PORTB |= (1<<PB5);
-		vTaskDelay(20);
+        PORTB &= ~(1<<PB2);	//****
+        PORTB |= (1<<PB3); //****
+        PORTB |= (1<<PB4);	//****
+        PORTB &= ~(1<<PB5);	//****
+        vTaskDelay(20);	//****
+		PORTB |= (1<<PB2);	//****
+        PORTB &= ~(1<<PB3);	//****
+        PORTB &= ~(1<<PB4);	//****
+		PORTB |= (1<<PB5);	//****
+		vTaskDelay(20);	//****
 
 		taskYIELD();	//context switching
 	}
@@ -116,25 +116,25 @@ void LimitSwitchMonitoring(void *pvParameters)
   	while (1)
 	{ 
 		// If the binary semaphore was created successfully
-		if (BS != NULL) // check wether semaphore is created successfully
+		if (BS != NULL) //****  check wether semaphore is created successfully
 		{
 			//Take the semaphore - don't block if the semaphore is not
         	//immediately available.
-			xSemaphoreTake(BS,1);
+			xSemaphoreTake(BS,1); //****
 			
 			//if both limit switch are pressed
-			if( !(PIND & (1<<PD0)) && !(PIND & (1<<PD1)))
+			if( !(PIND & (1<<PD0)) && !(PIND & (1<<PD1))) //****
 			{ 
 				//Give semaphore
-				xSemaphoreGive(BS);
+				xSemaphoreGive(BS); //****
 			}
 			else
 			{
-				PORTB &= ~(1<<PB0);
-				PORTB &= ~(1<<PB7);
+				PORTB &= ~(1<<PB0); //****
+				PORTB &= ~(1<<PB7); //****
 			}
 		}
-		taskYIELD();
+		taskYIELD(); //****
 	}
 }
 
@@ -145,19 +145,19 @@ void LimitSwitch(void *pvParameters)
 	while (1)
 	{
 		// If the binary semaphore was created successfully
-		if(BS != NULL) // check wether semaphore is created successfully
+		if(BS != NULL) //****   check wether semaphore is created successfully
 		{
 			//if binary semaphore is taken, wait 1 tick to see if it becomes free
-			if(xSemaphoreTake(BS,1) == pdTRUE)
+			if(xSemaphoreTake(BS,1) == pdTRUE) //****
 			{
-				PORTB |= (1<<PB0);
-				PORTB |= (1<<PB7);
+				PORTB |= (1<<PB0); //****
+				PORTB |= (1<<PB7); //****
 
 				//Give semaphore
-				xSemaphoreGive(BS);
+				xSemaphoreGive(BS); //****
 				vTaskDelay(1);
 			}
 		}
-		taskYIELD();
+		taskYIELD(); //****
 	}
 }

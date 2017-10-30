@@ -37,7 +37,7 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Include Directories
-INCLUDES = -I"D:\Workspace\MFI\Sem5\RTOS\Lab\messageQueue\FreeRTOS\Source" -I"D:\Workspace\MFI\Sem5\RTOS\Lab\messageQueue\FreeRTOS\Source\portable\GCC\ATMega169" -I"D:\Workspace\MFI\Sem5\RTOS\Lab\messageQueue\." -I"D:\Workspace\MFI\Sem5\RTOS\Lab\messageQueue\FreeRTOS\Source\include" -I"D:\Workspace\MFI\Sem5\RTOS\Lab\messageQueue\include" 
+INCLUDES = -I"D:\Workspace\RTOS\messageQueue\FreeRTOS\Source" -I"D:\Workspace\RTOS\messageQueue\FreeRTOS\Source\portable\GCC\ATMega169" -I"D:\Workspace\RTOS\messageQueue\." -I"D:\Workspace\RTOS\messageQueue\FreeRTOS\Source\include" -I"D:\Workspace\RTOS\messageQueue\include" 
 
 ## Objects that must be built in order to link
 OBJECTS = croutine.o list.o queue.o tasks.o heap_1.o port.o Main_Prog.o 

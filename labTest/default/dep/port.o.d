@@ -12,13 +12,13 @@ port.o: ../FreeRTOS/Source/portable/GCC/ATMega169/port.c \
   d:/program\ files/winavr-20100110/lib/gcc/../../avr/include/avr/version.h \
   d:/program\ files/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h \
   d:/program\ files/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h \
-  D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\include/FreeRTOS.h \
-  D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\include/projdefs.h \
-  D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\./FreeRTOSConfig.h \
-  D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\include/portable.h \
-  D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\portable\GCC\ATMega169/portmacro.h \
-  D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\include/task.h \
-  D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\include/list.h
+  D:\Workspace\RTOS\labTest\FreeRTOS\Source\include/FreeRTOS.h \
+  D:\Workspace\RTOS\labTest\FreeRTOS\Source\include/projdefs.h \
+  D:\Workspace\RTOS\labTest\./FreeRTOSConfig.h \
+  D:\Workspace\RTOS\labTest\FreeRTOS\Source\include/portable.h \
+  D:\Workspace\RTOS\labTest\FreeRTOS\Source\portable\GCC\ATMega169/portmacro.h \
+  D:\Workspace\RTOS\labTest\FreeRTOS\Source\include/task.h \
+  D:\Workspace\RTOS\labTest\FreeRTOS\Source\include/list.h
 
 d:/program\ files/winavr-20100110/lib/gcc/../../avr/include/stdlib.h:
 
@@ -46,16 +46,16 @@ d:/program\ files/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h:
 
 d:/program\ files/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h:
 
-D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\include/FreeRTOS.h:
+D:\Workspace\RTOS\labTest\FreeRTOS\Source\include/FreeRTOS.h:
 
-D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\include/projdefs.h:
+D:\Workspace\RTOS\labTest\FreeRTOS\Source\include/projdefs.h:
 
-D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\./FreeRTOSConfig.h:
+D:\Workspace\RTOS\labTest\./FreeRTOSConfig.h:
 
-D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\include/portable.h:
+D:\Workspace\RTOS\labTest\FreeRTOS\Source\include/portable.h:
 
-D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\portable\GCC\ATMega169/portmacro.h:
+D:\Workspace\RTOS\labTest\FreeRTOS\Source\portable\GCC\ATMega169/portmacro.h:
 
-D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\include/task.h:
+D:\Workspace\RTOS\labTest\FreeRTOS\Source\include/task.h:
 
-D:\Workspace\MFI\Sem5\RTOS\Lab\labTest\FreeRTOS\Source\include/list.h:
+D:\Workspace\RTOS\labTest\FreeRTOS\Source\include/list.h:

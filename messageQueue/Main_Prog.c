@@ -12,8 +12,6 @@
 /*FreeRTOS Function include files*/
 #define STACK_SIZE 100	//minimal stack size from FreeRTOSConfig.h
 
-QueueHandle_t queueLa;
-
 /*Task declaration/prototype*/
 void LED (void *pvParameters);
 void MOTORS (void *pvParameters);
@@ -23,7 +21,8 @@ void LimitSwitch (void *pvParameters);
 // Creates a semaphore named BS 
 xSemaphoreHandle BS;
 
-// Declare a variable of type QueueHandle
+// Creates a message queue named TQ
+xQueueHandle TQ;
 
 
 /*Start main function*/
@@ -44,7 +43,8 @@ int main()
 	//Create a binary semaphore
 	vSemaphoreCreateBinary(BS);
 
-	//queueLa = xQueueCreate( 5, sizeof( int32_t ) );
+	// Create a Message Queue
+	TQ = xQueueCreate(1, sizeof(char));
 
 	//start the scheduler
 	vTaskStartScheduler();
@@ -81,6 +81,7 @@ void LED (void *pvParameters) {
 /*Start Motors function*/
 //Nothing to change here
 void MOTORS (void *pvParameters) {
+
 	while(1) {
 		if( (PIND & (1<<PD0)) && (PIND & (1<<PD1))) {//Both unpress - Move forward
 			PORTD |= (1<<PD2);
@@ -118,26 +119,36 @@ void MOTORS (void *pvParameters) {
 /*LimitSwitchMonitoring function */
 void LimitSwitchMonitoring(void *pvParameters)
 {
+
+	static char SendMessage;
+
   	while (1)
 	{ 
-		// If the binary semaphore was created successfully
-		if (BS != NULL) // check wether semaphore is created successfully
+		// If the binary semaphore and Message Queue was created successfully
+		if ((BS != NULL) && (TQ != NULL)) // check wether semaphore is created successfully
 		{
 			//Take the semaphore - don't block if the semaphore is not
         	//immediately available.
 			xSemaphoreTake(BS,1);
+
+			// Reset queue to its original empty state.
+			xQueueReset(TQ);
 			
 			//if both limit switch are pressed
 			if( !(PIND & (1<<PD0)) && !(PIND & (1<<PD1)))
 			{ 
 				//Give semaphore
 				xSemaphoreGive(BS);
+				SendMessage = '1';
 			}
 			else
 			{
 				PORTB &= ~(1<<PB0);
 				PORTB &= ~(1<<PB7);
+				SendMessage = '2';
 			}
+
+			xQueueSendToBack(TQ,&SendMessage,1);
 		}
 		taskYIELD();
 	}
@@ -147,6 +158,9 @@ void LimitSwitchMonitoring(void *pvParameters)
 /*Limit switch function*/
 void LimitSwitch(void *pvParameters)
 {
+
+	char ReceiveMessage;
+
 	while (1)
 	{
 		// If the binary semaphore was created successfully
@@ -162,6 +176,24 @@ void LimitSwitch(void *pvParameters)
 				xSemaphoreGive(BS);
 				vTaskDelay(1);
 			}
+		
+			xQueueReceive(TQ, &ReceiveMessage,1);
+
+			if(ReceiveMessage == '1'){
+			
+				PORTB |= (1 << PB1);
+				PORTB |= (1 << PB6);
+
+			}else if(ReceiveMessage == '2'){
+			
+				PORTB |= (1 << PB1);
+				PORTB |= (1 << PB6);
+				vTaskDelay(20);
+				PORTB &= ~(1<<PB1);
+				PORTB &= ~(1<<PB6);
+				vTaskDelay(20);
+			}
+
 		}
 		taskYIELD();
 	}

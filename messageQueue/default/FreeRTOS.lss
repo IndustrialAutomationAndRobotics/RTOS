@@ -3,29 +3,29 @@ FreeRTOS.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000006  00800100  0000173a  000017ce  2**0
+  0 .data         00000006  00800100  000017d0  00001864  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000173a  00000000  00000000  00000094  2**1
+  1 .text         000017d0  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000037c  00800106  00800106  000017d4  2**0
+  2 .bss          0000037f  00800106  00800106  0000186a  2**0
                   ALLOC
-  3 .debug_aranges 000000e0  00000000  00000000  000017d4  2**0
+  3 .debug_aranges 000000e0  00000000  00000000  0000186a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_pubnames 000004d9  00000000  00000000  000018b4  2**0
+  4 .debug_pubnames 000004e0  00000000  00000000  0000194a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00001c8b  00000000  00000000  00001d8d  2**0
+  5 .debug_info   00001cbb  00000000  00000000  00001e2a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 0000095b  00000000  00000000  00003a18  2**0
+  6 .debug_abbrev 0000096a  00000000  00000000  00003ae5  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000019c2  00000000  00000000  00004373  2**0
+  7 .debug_line   000019d6  00000000  00000000  0000444f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000003b0  00000000  00000000  00005d38  2**2
+  8 .debug_frame  000003b0  00000000  00000000  00005e28  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000d20  00000000  00000000  000060e8  2**0
+  9 .debug_str    00000d2e  00000000  00000000  000061d8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000e50  00000000  00000000  00006e08  2**0
+ 10 .debug_loc    00000e60  00000000  00000000  00006f06  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000018  00000000  00000000  00007c58  2**0
+ 11 .debug_ranges 00000018  00000000  00000000  00007d66  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -67,7 +67,7 @@ Disassembly of section .text:
       68:	11 e0       	ldi	r17, 0x01	; 1
       6a:	a0 e0       	ldi	r26, 0x00	; 0
       6c:	b1 e0       	ldi	r27, 0x01	; 1
-      6e:	ea e3       	ldi	r30, 0x3A	; 58
+      6e:	e0 ed       	ldi	r30, 0xD0	; 208
       70:	f7 e1       	ldi	r31, 0x17	; 23
       72:	02 c0       	rjmp	.+4      	; 0x78 <.do_copy_data_start>
 
@@ -90,11 +90,11 @@ Disassembly of section .text:
       86:	1d 92       	st	X+, r1
 
 00000088 <.do_clear_bss_start>:
-      88:	a2 38       	cpi	r26, 0x82	; 130
+      88:	a5 38       	cpi	r26, 0x85	; 133
       8a:	b1 07       	cpc	r27, r17
       8c:	e1 f7       	brne	.-8      	; 0x86 <.do_clear_bss_loop>
-      8e:	0e 94 2e 0b 	call	0x165c	; 0x165c <main>
-      92:	0c 94 9b 0b 	jmp	0x1736	; 0x1736 <_exit>
+      8e:	0e 94 71 0b 	call	0x16e2	; 0x16e2 <main>
+      92:	0c 94 e6 0b 	jmp	0x17cc	; 0x17cc <_exit>
 
 00000096 <__bad_interrupt>:
       96:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -1184,7 +1184,7 @@ static void prvCopyDataFromQueue( xQUEUE * const pxQueue, const void *pvBuffer )
      5f4:	7f 81       	ldd	r23, Y+7	; 0x07
      5f6:	cf 01       	movw	r24, r30
      5f8:	50 e0       	ldi	r21, 0x00	; 0
-     5fa:	0e 94 7c 0b 	call	0x16f8	; 0x16f8 <memcpy>
+     5fa:	0e 94 c7 0b 	call	0x178e	; 0x178e <memcpy>
 		if( pxQueue->uxMessagesWaiting > ( unsigned portBASE_TYPE ) 0 )
 		{
 			traceQUEUE_RECEIVE_FROM_ISR( pxQueue );
@@ -1264,14 +1264,14 @@ static void prvCopyDataToQueue( xQUEUE *pxQueue, const void *pvItemToQueue, port
 		#endif
 	}
 	else if( xPosition == queueSEND_TO_BACK )
-     642:	88 23       	and	r24, r24
+     642:	81 30       	cpi	r24, 0x01	; 1
      644:	b1 f4       	brne	.+44     	; 0x672 <prvCopyDataToQueue+0x3e>
 	{
 		memcpy( ( void * ) pxQueue->pcWriteTo, pvItemToQueue, ( unsigned ) pxQueue->uxItemSize );
      646:	8c 81       	ldd	r24, Y+4	; 0x04
      648:	9d 81       	ldd	r25, Y+5	; 0x05
      64a:	50 e0       	ldi	r21, 0x00	; 0
-     64c:	0e 94 7c 0b 	call	0x16f8	; 0x16f8 <memcpy>
+     64c:	0e 94 c7 0b 	call	0x178e	; 0x178e <memcpy>
 		pxQueue->pcWriteTo += pxQueue->uxItemSize;
      650:	8c 8d       	ldd	r24, Y+28	; 0x1c
      652:	2c 81       	ldd	r18, Y+4	; 0x04
@@ -1301,7 +1301,7 @@ static void prvCopyDataToQueue( xQUEUE *pxQueue, const void *pvItemToQueue, port
      672:	8e 81       	ldd	r24, Y+6	; 0x06
      674:	9f 81       	ldd	r25, Y+7	; 0x07
      676:	50 e0       	ldi	r21, 0x00	; 0
-     678:	0e 94 7c 0b 	call	0x16f8	; 0x16f8 <memcpy>
+     678:	0e 94 c7 0b 	call	0x178e	; 0x178e <memcpy>
 		pxQueue->pcReadFrom -= pxQueue->uxItemSize;
      67c:	8c 8d       	ldd	r24, Y+28	; 0x1c
      67e:	90 e0       	ldi	r25, 0x00	; 0
@@ -1702,7 +1702,7 @@ static void prvCopyDataFromQueue( xQUEUE * const pxQueue, const void *pvBuffer )
      818:	89 2d       	mov	r24, r9
      81a:	98 2d       	mov	r25, r8
      81c:	50 e0       	ldi	r21, 0x00	; 0
-     81e:	0e 94 7c 0b 	call	0x16f8	; 0x16f8 <memcpy>
+     81e:	0e 94 c7 0b 	call	0x178e	; 0x178e <memcpy>
 				/* Remember our read position in case we are just peeking. */
 				pcOriginalReadPosition = pxQueue->pcReadFrom;
 
@@ -3444,7 +3444,7 @@ tskTCB *pxNewTCB;
     10e2:	65 ea       	ldi	r22, 0xA5	; 165
     10e4:	70 e0       	ldi	r23, 0x00	; 0
     10e6:	a6 01       	movw	r20, r12
-    10e8:	0e 94 85 0b 	call	0x170a	; 0x170a <memset>
+    10e8:	0e 94 d0 0b 	call	0x17a0	; 0x17a0 <memset>
 {
 	/* Store the function name in the TCB. */
 	#if configMAX_TASK_NAME_LEN > 1
@@ -3456,7 +3456,7 @@ tskTCB *pxNewTCB;
     10f0:	b5 01       	movw	r22, r10
     10f2:	48 e0       	ldi	r20, 0x08	; 8
     10f4:	50 e0       	ldi	r21, 0x00	; 0
-    10f6:	0e 94 8c 0b 	call	0x1718	; 0x1718 <strncpy>
+    10f6:	0e 94 d7 0b 	call	0x17ae	; 0x17ae <strncpy>
 	}
 	#endif
 	pxTCB->pcTaskName[ ( unsigned portSHORT ) configMAX_TASK_NAME_LEN - ( unsigned portSHORT ) 1 ] = '\0';
@@ -4349,342 +4349,458 @@ void vPortYield( void )
     1572:	08 95       	ret
 
 00001574 <LimitSwitch>:
+}
+
+
+/*Limit switch function*/
 void LimitSwitch(void *pvParameters)
 {
+    1574:	0f 93       	push	r16
+    1576:	1f 93       	push	r17
+    1578:	df 93       	push	r29
+    157a:	cf 93       	push	r28
+    157c:	0f 92       	push	r0
+    157e:	cd b7       	in	r28, 0x3d	; 61
+    1580:	de b7       	in	r29, 0x3e	; 62
+				//Give semaphore
+				xSemaphoreGive(BS);
+				vTaskDelay(1);
+			}
+		
+			xQueueReceive(TQ, &ReceiveMessage,1);
+    1582:	8e 01       	movw	r16, r28
+    1584:	0f 5f       	subi	r16, 0xFF	; 255
+    1586:	1f 4f       	sbci	r17, 0xFF	; 255
+	char ReceiveMessage;
+
 	while (1)
 	{
 		// If the binary semaphore was created successfully
 		if(BS != NULL) // check wether semaphore is created successfully
-    1574:	80 91 80 04 	lds	r24, 0x0480
-    1578:	90 91 81 04 	lds	r25, 0x0481
-    157c:	00 97       	sbiw	r24, 0x00	; 0
-    157e:	d1 f0       	breq	.+52     	; 0x15b4 <LimitSwitch+0x40>
+    1588:	80 91 83 04 	lds	r24, 0x0483
+    158c:	90 91 84 04 	lds	r25, 0x0484
+    1590:	00 97       	sbiw	r24, 0x00	; 0
+    1592:	c1 f1       	breq	.+112    	; 0x1604 <LimitSwitch+0x90>
 		{
 			//if binary semaphore is taken, wait 1 tick to see if it becomes free
 			if(xSemaphoreTake(BS,1) == pdTRUE)
-    1580:	60 e0       	ldi	r22, 0x00	; 0
-    1582:	70 e0       	ldi	r23, 0x00	; 0
-    1584:	41 e0       	ldi	r20, 0x01	; 1
-    1586:	50 e0       	ldi	r21, 0x00	; 0
-    1588:	20 e0       	ldi	r18, 0x00	; 0
-    158a:	0e 94 c3 03 	call	0x786	; 0x786 <xQueueGenericReceive>
-    158e:	81 30       	cpi	r24, 0x01	; 1
-    1590:	89 f4       	brne	.+34     	; 0x15b4 <LimitSwitch+0x40>
+    1594:	60 e0       	ldi	r22, 0x00	; 0
+    1596:	70 e0       	ldi	r23, 0x00	; 0
+    1598:	41 e0       	ldi	r20, 0x01	; 1
+    159a:	50 e0       	ldi	r21, 0x00	; 0
+    159c:	20 e0       	ldi	r18, 0x00	; 0
+    159e:	0e 94 c3 03 	call	0x786	; 0x786 <xQueueGenericReceive>
+    15a2:	81 30       	cpi	r24, 0x01	; 1
+    15a4:	89 f4       	brne	.+34     	; 0x15c8 <LimitSwitch+0x54>
 			{
 				PORTB |= (1<<PB0);
-    1592:	28 9a       	sbi	0x05, 0	; 5
+    15a6:	28 9a       	sbi	0x05, 0	; 5
 				PORTB |= (1<<PB7);
-    1594:	2f 9a       	sbi	0x05, 7	; 5
+    15a8:	2f 9a       	sbi	0x05, 7	; 5
 
 				//Give semaphore
 				xSemaphoreGive(BS);
-    1596:	80 91 80 04 	lds	r24, 0x0480
-    159a:	90 91 81 04 	lds	r25, 0x0481
-    159e:	60 e0       	ldi	r22, 0x00	; 0
-    15a0:	70 e0       	ldi	r23, 0x00	; 0
-    15a2:	40 e0       	ldi	r20, 0x00	; 0
-    15a4:	50 e0       	ldi	r21, 0x00	; 0
-    15a6:	20 e0       	ldi	r18, 0x00	; 0
-    15a8:	0e 94 8f 04 	call	0x91e	; 0x91e <xQueueGenericSend>
+    15aa:	80 91 83 04 	lds	r24, 0x0483
+    15ae:	90 91 84 04 	lds	r25, 0x0484
+    15b2:	60 e0       	ldi	r22, 0x00	; 0
+    15b4:	70 e0       	ldi	r23, 0x00	; 0
+    15b6:	40 e0       	ldi	r20, 0x00	; 0
+    15b8:	50 e0       	ldi	r21, 0x00	; 0
+    15ba:	20 e0       	ldi	r18, 0x00	; 0
+    15bc:	0e 94 8f 04 	call	0x91e	; 0x91e <xQueueGenericSend>
 				vTaskDelay(1);
-    15ac:	81 e0       	ldi	r24, 0x01	; 1
-    15ae:	90 e0       	ldi	r25, 0x00	; 0
-    15b0:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
+    15c0:	81 e0       	ldi	r24, 0x01	; 1
+    15c2:	90 e0       	ldi	r25, 0x00	; 0
+    15c4:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
 			}
+		
+			xQueueReceive(TQ, &ReceiveMessage,1);
+    15c8:	80 91 81 04 	lds	r24, 0x0481
+    15cc:	90 91 82 04 	lds	r25, 0x0482
+    15d0:	b8 01       	movw	r22, r16
+    15d2:	41 e0       	ldi	r20, 0x01	; 1
+    15d4:	50 e0       	ldi	r21, 0x00	; 0
+    15d6:	20 e0       	ldi	r18, 0x00	; 0
+    15d8:	0e 94 c3 03 	call	0x786	; 0x786 <xQueueGenericReceive>
+
+			if(ReceiveMessage == '1'){
+    15dc:	89 81       	ldd	r24, Y+1	; 0x01
+    15de:	81 33       	cpi	r24, 0x31	; 49
+    15e0:	19 f4       	brne	.+6      	; 0x15e8 <LimitSwitch+0x74>
+			
+				PORTB |= (1 << PB1);
+    15e2:	29 9a       	sbi	0x05, 1	; 5
+				PORTB |= (1 << PB6);
+    15e4:	2e 9a       	sbi	0x05, 6	; 5
+    15e6:	0e c0       	rjmp	.+28     	; 0x1604 <LimitSwitch+0x90>
+
+			}else if(ReceiveMessage == '2'){
+    15e8:	82 33       	cpi	r24, 0x32	; 50
+    15ea:	61 f4       	brne	.+24     	; 0x1604 <LimitSwitch+0x90>
+			
+				PORTB |= (1 << PB1);
+    15ec:	29 9a       	sbi	0x05, 1	; 5
+				PORTB |= (1 << PB6);
+    15ee:	2e 9a       	sbi	0x05, 6	; 5
+				vTaskDelay(20);
+    15f0:	84 e1       	ldi	r24, 0x14	; 20
+    15f2:	90 e0       	ldi	r25, 0x00	; 0
+    15f4:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
+				PORTB &= ~(1<<PB1);
+    15f8:	29 98       	cbi	0x05, 1	; 5
+				PORTB &= ~(1<<PB6);
+    15fa:	2e 98       	cbi	0x05, 6	; 5
+				vTaskDelay(20);
+    15fc:	84 e1       	ldi	r24, 0x14	; 20
+    15fe:	90 e0       	ldi	r25, 0x00	; 0
+    1600:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
+			}
+
 		}
 		taskYIELD();
-    15b4:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
-    15b8:	dd cf       	rjmp	.-70     	; 0x1574 <LimitSwitch>
+    1604:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
+    1608:	bf cf       	rjmp	.-130    	; 0x1588 <LimitSwitch+0x14>
 
-000015ba <LimitSwitchMonitoring>:
+0000160a <LimitSwitchMonitoring>:
+} //Done task 2
+
+
+/*LimitSwitchMonitoring function */
 void LimitSwitchMonitoring(void *pvParameters)
 {
-  	while (1)
-	{ 
-		// If the binary semaphore was created successfully
-		if (BS != NULL) // check wether semaphore is created successfully
-    15ba:	80 91 80 04 	lds	r24, 0x0480
-    15be:	90 91 81 04 	lds	r25, 0x0481
-    15c2:	00 97       	sbiw	r24, 0x00	; 0
-    15c4:	c9 f0       	breq	.+50     	; 0x15f8 <LimitSwitchMonitoring+0x3e>
-		{
-			//Take the semaphore - don't block if the semaphore is not
-        	//immediately available.
-			xSemaphoreTake(BS,1);
-    15c6:	60 e0       	ldi	r22, 0x00	; 0
-    15c8:	70 e0       	ldi	r23, 0x00	; 0
-    15ca:	41 e0       	ldi	r20, 0x01	; 1
-    15cc:	50 e0       	ldi	r21, 0x00	; 0
-    15ce:	20 e0       	ldi	r18, 0x00	; 0
-    15d0:	0e 94 c3 03 	call	0x786	; 0x786 <xQueueGenericReceive>
-			
-			//if both limit switch are pressed
-			if( !(PIND & (1<<PD0)) && !(PIND & (1<<PD1)))
-    15d4:	48 99       	sbic	0x09, 0	; 9
-    15d6:	0e c0       	rjmp	.+28     	; 0x15f4 <LimitSwitchMonitoring+0x3a>
-    15d8:	49 99       	sbic	0x09, 1	; 9
-    15da:	0c c0       	rjmp	.+24     	; 0x15f4 <LimitSwitchMonitoring+0x3a>
-			{ 
-				//Give semaphore
-				xSemaphoreGive(BS);
-    15dc:	80 91 80 04 	lds	r24, 0x0480
-    15e0:	90 91 81 04 	lds	r25, 0x0481
-    15e4:	60 e0       	ldi	r22, 0x00	; 0
-    15e6:	70 e0       	ldi	r23, 0x00	; 0
-    15e8:	40 e0       	ldi	r20, 0x00	; 0
-    15ea:	50 e0       	ldi	r21, 0x00	; 0
-    15ec:	20 e0       	ldi	r18, 0x00	; 0
-    15ee:	0e 94 8f 04 	call	0x91e	; 0x91e <xQueueGenericSend>
-    15f2:	02 c0       	rjmp	.+4      	; 0x15f8 <LimitSwitchMonitoring+0x3e>
+    160a:	0f 93       	push	r16
+    160c:	1f 93       	push	r17
 			}
 			else
 			{
 				PORTB &= ~(1<<PB0);
-    15f4:	28 98       	cbi	0x05, 0	; 5
 				PORTB &= ~(1<<PB7);
-    15f6:	2f 98       	cbi	0x05, 7	; 5
+				SendMessage = '2';
+    160e:	02 e3       	ldi	r16, 0x32	; 50
+			//if both limit switch are pressed
+			if( !(PIND & (1<<PD0)) && !(PIND & (1<<PD1)))
+			{ 
+				//Give semaphore
+				xSemaphoreGive(BS);
+				SendMessage = '1';
+    1610:	11 e3       	ldi	r17, 0x31	; 49
+	static char SendMessage;
+
+  	while (1)
+	{ 
+		// If the binary semaphore and Message Queue was created successfully
+		if ((BS != NULL) && (TQ != NULL)) // check wether semaphore is created successfully
+    1612:	20 91 83 04 	lds	r18, 0x0483
+    1616:	30 91 84 04 	lds	r19, 0x0484
+    161a:	21 15       	cp	r18, r1
+    161c:	31 05       	cpc	r19, r1
+    161e:	79 f1       	breq	.+94     	; 0x167e <LimitSwitchMonitoring+0x74>
+    1620:	80 91 81 04 	lds	r24, 0x0481
+    1624:	90 91 82 04 	lds	r25, 0x0482
+    1628:	89 2b       	or	r24, r25
+    162a:	49 f1       	breq	.+82     	; 0x167e <LimitSwitchMonitoring+0x74>
+		{
+			//Take the semaphore - don't block if the semaphore is not
+        	//immediately available.
+			xSemaphoreTake(BS,1);
+    162c:	c9 01       	movw	r24, r18
+    162e:	60 e0       	ldi	r22, 0x00	; 0
+    1630:	70 e0       	ldi	r23, 0x00	; 0
+    1632:	41 e0       	ldi	r20, 0x01	; 1
+    1634:	50 e0       	ldi	r21, 0x00	; 0
+    1636:	20 e0       	ldi	r18, 0x00	; 0
+    1638:	0e 94 c3 03 	call	0x786	; 0x786 <xQueueGenericReceive>
+
+			// Reset queue to its original empty state.
+			//xQueueReset(TQ);
+			
+			//if both limit switch are pressed
+			if( !(PIND & (1<<PD0)) && !(PIND & (1<<PD1)))
+    163c:	48 99       	sbic	0x09, 0	; 9
+    163e:	10 c0       	rjmp	.+32     	; 0x1660 <LimitSwitchMonitoring+0x56>
+    1640:	49 99       	sbic	0x09, 1	; 9
+    1642:	0e c0       	rjmp	.+28     	; 0x1660 <LimitSwitchMonitoring+0x56>
+			{ 
+				//Give semaphore
+				xSemaphoreGive(BS);
+    1644:	80 91 83 04 	lds	r24, 0x0483
+    1648:	90 91 84 04 	lds	r25, 0x0484
+    164c:	60 e0       	ldi	r22, 0x00	; 0
+    164e:	70 e0       	ldi	r23, 0x00	; 0
+    1650:	40 e0       	ldi	r20, 0x00	; 0
+    1652:	50 e0       	ldi	r21, 0x00	; 0
+    1654:	20 e0       	ldi	r18, 0x00	; 0
+    1656:	0e 94 8f 04 	call	0x91e	; 0x91e <xQueueGenericSend>
+				SendMessage = '1';
+    165a:	10 93 80 04 	sts	0x0480, r17
+    165e:	04 c0       	rjmp	.+8      	; 0x1668 <LimitSwitchMonitoring+0x5e>
 			}
+			else
+			{
+				PORTB &= ~(1<<PB0);
+    1660:	28 98       	cbi	0x05, 0	; 5
+				PORTB &= ~(1<<PB7);
+    1662:	2f 98       	cbi	0x05, 7	; 5
+				SendMessage = '2';
+    1664:	00 93 80 04 	sts	0x0480, r16
+			}
+
+			xQueueSendToFront(TQ,&SendMessage,1);
+    1668:	80 91 81 04 	lds	r24, 0x0481
+    166c:	90 91 82 04 	lds	r25, 0x0482
+    1670:	60 e8       	ldi	r22, 0x80	; 128
+    1672:	74 e0       	ldi	r23, 0x04	; 4
+    1674:	41 e0       	ldi	r20, 0x01	; 1
+    1676:	50 e0       	ldi	r21, 0x00	; 0
+    1678:	21 e0       	ldi	r18, 0x01	; 1
+    167a:	0e 94 8f 04 	call	0x91e	; 0x91e <xQueueGenericSend>
 		}
 		taskYIELD();
-    15f8:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
-    15fc:	de cf       	rjmp	.-68     	; 0x15ba <LimitSwitchMonitoring>
+    167e:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
+    1682:	c7 cf       	rjmp	.-114    	; 0x1612 <LimitSwitchMonitoring+0x8>
 
-000015fe <MOTORS>:
-
+00001684 <MOTORS>:
 /*Start Motors function*/
 //Nothing to change here
 void MOTORS (void *pvParameters) {
+
 	while(1) {
 		if( (PIND & (1<<PD0)) && (PIND & (1<<PD1))) {//Both unpress - Move forward
-    15fe:	48 9b       	sbis	0x09, 0	; 9
-    1600:	05 c0       	rjmp	.+10     	; 0x160c <MOTORS+0xe>
-    1602:	49 9b       	sbis	0x09, 1	; 9
-    1604:	03 c0       	rjmp	.+6      	; 0x160c <MOTORS+0xe>
+    1684:	48 9b       	sbis	0x09, 0	; 9
+    1686:	05 c0       	rjmp	.+10     	; 0x1692 <MOTORS+0xe>
+    1688:	49 9b       	sbis	0x09, 1	; 9
+    168a:	03 c0       	rjmp	.+6      	; 0x1692 <MOTORS+0xe>
 			PORTD |= (1<<PD2);
-    1606:	5a 9a       	sbi	0x0b, 2	; 11
+    168c:	5a 9a       	sbi	0x0b, 2	; 11
 			PORTD &= ~(1<<PD3);
-    1608:	5b 98       	cbi	0x0b, 3	; 11
-    160a:	04 c0       	rjmp	.+8      	; 0x1614 <MOTORS+0x16>
+    168e:	5b 98       	cbi	0x0b, 3	; 11
+    1690:	04 c0       	rjmp	.+8      	; 0x169a <MOTORS+0x16>
 			PORTD &= ~(1<<PD4);
 			PORTD |= (1<<PD5);
 			PORTD |= (1<<PD6);  //enable 1
 			PORTD |= (1<<PD7);  //enable 2
 		}
 		else if(PIND & (1<<PD0)) {//Trigger right switch - Move left
-    160c:	48 9b       	sbis	0x09, 0	; 9
-    160e:	07 c0       	rjmp	.+14     	; 0x161e <MOTORS+0x20>
+    1692:	48 9b       	sbis	0x09, 0	; 9
+    1694:	07 c0       	rjmp	.+14     	; 0x16a4 <MOTORS+0x20>
 			PORTD &= ~(1<<PD2);
-    1610:	5a 98       	cbi	0x0b, 2	; 11
+    1696:	5a 98       	cbi	0x0b, 2	; 11
 			PORTD |= (1<<PD3);
-    1612:	5b 9a       	sbi	0x0b, 3	; 11
+    1698:	5b 9a       	sbi	0x0b, 3	; 11
 			PORTD &= ~(1<<PD4);
-    1614:	5c 98       	cbi	0x0b, 4	; 11
+    169a:	5c 98       	cbi	0x0b, 4	; 11
 			PORTD |= (1<<PD5);
-    1616:	5d 9a       	sbi	0x0b, 5	; 11
+    169c:	5d 9a       	sbi	0x0b, 5	; 11
 			PORTD |= (1<<PD6);  //enable 1
-    1618:	5e 9a       	sbi	0x0b, 6	; 11
+    169e:	5e 9a       	sbi	0x0b, 6	; 11
 			PORTD |= (1<<PD7);  //enable 2	
-    161a:	5f 9a       	sbi	0x0b, 7	; 11
-    161c:	09 c0       	rjmp	.+18     	; 0x1630 <MOTORS+0x32>
+    16a0:	5f 9a       	sbi	0x0b, 7	; 11
+    16a2:	09 c0       	rjmp	.+18     	; 0x16b6 <MOTORS+0x32>
 		}
 		else if(PIND & (1<<PD1)){//Trigger left switch - Move right
-    161e:	49 9b       	sbis	0x09, 1	; 9
-    1620:	05 c0       	rjmp	.+10     	; 0x162c <MOTORS+0x2e>
+    16a4:	49 9b       	sbis	0x09, 1	; 9
+    16a6:	05 c0       	rjmp	.+10     	; 0x16b2 <MOTORS+0x2e>
 			PORTD |= (1<<PD2);
-    1622:	5a 9a       	sbi	0x0b, 2	; 11
+    16a8:	5a 9a       	sbi	0x0b, 2	; 11
 			PORTD &= ~(1<<PD3);
-    1624:	5b 98       	cbi	0x0b, 3	; 11
+    16aa:	5b 98       	cbi	0x0b, 3	; 11
 			PORTD |= (1<<PD4);
-    1626:	5c 9a       	sbi	0x0b, 4	; 11
+    16ac:	5c 9a       	sbi	0x0b, 4	; 11
 			PORTD &= ~(1<<PD5);	
-    1628:	5d 98       	cbi	0x0b, 5	; 11
-    162a:	f6 cf       	rjmp	.-20     	; 0x1618 <MOTORS+0x1a>
+    16ae:	5d 98       	cbi	0x0b, 5	; 11
+    16b0:	f6 cf       	rjmp	.-20     	; 0x169e <MOTORS+0x1a>
 			PORTD |= (1<<PD6);  //enable 1
 			PORTD |= (1<<PD7);  //enable 2
 		}
 		else {//Both trigger - stop
 			PORTD &= ~(1<<PD6);
-    162c:	5e 98       	cbi	0x0b, 6	; 11
+    16b2:	5e 98       	cbi	0x0b, 6	; 11
 			PORTD &= ~(1<<PD7);
-    162e:	5f 98       	cbi	0x0b, 7	; 11
+    16b4:	5f 98       	cbi	0x0b, 7	; 11
 		}
 		taskYIELD();	//context switching
-    1630:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
-    1634:	e4 cf       	rjmp	.-56     	; 0x15fe <MOTORS>
+    16b6:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
+    16ba:	e4 cf       	rjmp	.-56     	; 0x1684 <MOTORS>
 
-00001636 <LED>:
+000016bc <LED>:
 
 //Start LED function
 //Modify based on the given pseudocode
 void LED (void *pvParameters) {
 	while(1) {
         PORTB &= ~(1<<PB2);
-    1636:	2a 98       	cbi	0x05, 2	; 5
+    16bc:	2a 98       	cbi	0x05, 2	; 5
         PORTB |= (1<<PB3);
-    1638:	2b 9a       	sbi	0x05, 3	; 5
+    16be:	2b 9a       	sbi	0x05, 3	; 5
         PORTB |= (1<<PB4);
-    163a:	2c 9a       	sbi	0x05, 4	; 5
+    16c0:	2c 9a       	sbi	0x05, 4	; 5
         PORTB &= ~(1<<PB5);
-    163c:	2d 98       	cbi	0x05, 5	; 5
+    16c2:	2d 98       	cbi	0x05, 5	; 5
         vTaskDelay(20);
-    163e:	84 e1       	ldi	r24, 0x14	; 20
-    1640:	90 e0       	ldi	r25, 0x00	; 0
-    1642:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
+    16c4:	84 e1       	ldi	r24, 0x14	; 20
+    16c6:	90 e0       	ldi	r25, 0x00	; 0
+    16c8:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
 		PORTB |= (1<<PB2);
-    1646:	2a 9a       	sbi	0x05, 2	; 5
+    16cc:	2a 9a       	sbi	0x05, 2	; 5
         PORTB &= ~(1<<PB3);
-    1648:	2b 98       	cbi	0x05, 3	; 5
+    16ce:	2b 98       	cbi	0x05, 3	; 5
         PORTB &= ~(1<<PB4);
-    164a:	2c 98       	cbi	0x05, 4	; 5
+    16d0:	2c 98       	cbi	0x05, 4	; 5
 		PORTB |= (1<<PB5);
-    164c:	2d 9a       	sbi	0x05, 5	; 5
+    16d2:	2d 9a       	sbi	0x05, 5	; 5
 		vTaskDelay(20);
-    164e:	84 e1       	ldi	r24, 0x14	; 20
-    1650:	90 e0       	ldi	r25, 0x00	; 0
-    1652:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
+    16d4:	84 e1       	ldi	r24, 0x14	; 20
+    16d6:	90 e0       	ldi	r25, 0x00	; 0
+    16d8:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
 
 		taskYIELD();	//context switching
-    1656:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
-    165a:	ed cf       	rjmp	.-38     	; 0x1636 <LED>
+    16dc:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
+    16e0:	ed cf       	rjmp	.-38     	; 0x16bc <LED>
 
-0000165c <main>:
-// Declare a variable of type QueueHandle
+000016e2 <main>:
+xQueueHandle TQ;
 
 
 /*Start main function*/
 int main()
 {
-    165c:	ef 92       	push	r14
-    165e:	ff 92       	push	r15
-    1660:	0f 93       	push	r16
+    16e2:	ef 92       	push	r14
+    16e4:	ff 92       	push	r15
+    16e6:	0f 93       	push	r16
 	DDRB = 0xFF; //1111 1111
-    1662:	8f ef       	ldi	r24, 0xFF	; 255
-    1664:	84 b9       	out	0x04, r24	; 4
+    16e8:	8f ef       	ldi	r24, 0xFF	; 255
+    16ea:	84 b9       	out	0x04, r24	; 4
 	DDRD = 0xFC; //1111 1100
-    1666:	8c ef       	ldi	r24, 0xFC	; 252
-    1668:	8a b9       	out	0x0a, r24	; 10
+    16ec:	8c ef       	ldi	r24, 0xFC	; 252
+    16ee:	8a b9       	out	0x0a, r24	; 10
 
 	//Set limit switch to 1 (unpress)
 	PORTD |= (1<<PD0); //1111 1101
-    166a:	58 9a       	sbi	0x0b, 0	; 11
+    16f0:	58 9a       	sbi	0x0b, 0	; 11
 	PORTD |= (1<<PD1); //1111 1111
-    166c:	59 9a       	sbi	0x0b, 1	; 11
+    16f2:	59 9a       	sbi	0x0b, 1	; 11
 
 	xTaskCreate(LED,NULL,STACK_SIZE,NULL,1,NULL);					//Task for LED
-    166e:	8b e1       	ldi	r24, 0x1B	; 27
-    1670:	9b e0       	ldi	r25, 0x0B	; 11
-    1672:	60 e0       	ldi	r22, 0x00	; 0
-    1674:	70 e0       	ldi	r23, 0x00	; 0
-    1676:	44 e6       	ldi	r20, 0x64	; 100
-    1678:	50 e0       	ldi	r21, 0x00	; 0
-    167a:	20 e0       	ldi	r18, 0x00	; 0
-    167c:	30 e0       	ldi	r19, 0x00	; 0
-    167e:	01 e0       	ldi	r16, 0x01	; 1
-    1680:	ee 24       	eor	r14, r14
-    1682:	ff 24       	eor	r15, r15
-    1684:	0e 94 47 08 	call	0x108e	; 0x108e <xTaskCreate>
+    16f4:	8e e5       	ldi	r24, 0x5E	; 94
+    16f6:	9b e0       	ldi	r25, 0x0B	; 11
+    16f8:	60 e0       	ldi	r22, 0x00	; 0
+    16fa:	70 e0       	ldi	r23, 0x00	; 0
+    16fc:	44 e6       	ldi	r20, 0x64	; 100
+    16fe:	50 e0       	ldi	r21, 0x00	; 0
+    1700:	20 e0       	ldi	r18, 0x00	; 0
+    1702:	30 e0       	ldi	r19, 0x00	; 0
+    1704:	01 e0       	ldi	r16, 0x01	; 1
+    1706:	ee 24       	eor	r14, r14
+    1708:	ff 24       	eor	r15, r15
+    170a:	0e 94 47 08 	call	0x108e	; 0x108e <xTaskCreate>
 	xTaskCreate(MOTORS,NULL,STACK_SIZE,NULL,1,NULL);				//Task for motors
-    1688:	8f ef       	ldi	r24, 0xFF	; 255
-    168a:	9a e0       	ldi	r25, 0x0A	; 10
-    168c:	60 e0       	ldi	r22, 0x00	; 0
-    168e:	70 e0       	ldi	r23, 0x00	; 0
-    1690:	44 e6       	ldi	r20, 0x64	; 100
-    1692:	50 e0       	ldi	r21, 0x00	; 0
-    1694:	20 e0       	ldi	r18, 0x00	; 0
-    1696:	30 e0       	ldi	r19, 0x00	; 0
-    1698:	0e 94 47 08 	call	0x108e	; 0x108e <xTaskCreate>
+    170e:	82 e4       	ldi	r24, 0x42	; 66
+    1710:	9b e0       	ldi	r25, 0x0B	; 11
+    1712:	60 e0       	ldi	r22, 0x00	; 0
+    1714:	70 e0       	ldi	r23, 0x00	; 0
+    1716:	44 e6       	ldi	r20, 0x64	; 100
+    1718:	50 e0       	ldi	r21, 0x00	; 0
+    171a:	20 e0       	ldi	r18, 0x00	; 0
+    171c:	30 e0       	ldi	r19, 0x00	; 0
+    171e:	0e 94 47 08 	call	0x108e	; 0x108e <xTaskCreate>
 	xTaskCreate(LimitSwitchMonitoring,NULL,STACK_SIZE,NULL,1,NULL);	//Task for limit switch monitoring
-    169c:	8d ed       	ldi	r24, 0xDD	; 221
-    169e:	9a e0       	ldi	r25, 0x0A	; 10
-    16a0:	60 e0       	ldi	r22, 0x00	; 0
-    16a2:	70 e0       	ldi	r23, 0x00	; 0
-    16a4:	44 e6       	ldi	r20, 0x64	; 100
-    16a6:	50 e0       	ldi	r21, 0x00	; 0
-    16a8:	20 e0       	ldi	r18, 0x00	; 0
-    16aa:	30 e0       	ldi	r19, 0x00	; 0
-    16ac:	0e 94 47 08 	call	0x108e	; 0x108e <xTaskCreate>
+    1722:	85 e0       	ldi	r24, 0x05	; 5
+    1724:	9b e0       	ldi	r25, 0x0B	; 11
+    1726:	60 e0       	ldi	r22, 0x00	; 0
+    1728:	70 e0       	ldi	r23, 0x00	; 0
+    172a:	44 e6       	ldi	r20, 0x64	; 100
+    172c:	50 e0       	ldi	r21, 0x00	; 0
+    172e:	20 e0       	ldi	r18, 0x00	; 0
+    1730:	30 e0       	ldi	r19, 0x00	; 0
+    1732:	0e 94 47 08 	call	0x108e	; 0x108e <xTaskCreate>
 	xTaskCreate(LimitSwitch,NULL,STACK_SIZE,NULL,2,NULL);			//Task for triggered both limit switch
-    16b0:	8a eb       	ldi	r24, 0xBA	; 186
-    16b2:	9a e0       	ldi	r25, 0x0A	; 10
-    16b4:	60 e0       	ldi	r22, 0x00	; 0
-    16b6:	70 e0       	ldi	r23, 0x00	; 0
-    16b8:	44 e6       	ldi	r20, 0x64	; 100
-    16ba:	50 e0       	ldi	r21, 0x00	; 0
-    16bc:	20 e0       	ldi	r18, 0x00	; 0
-    16be:	30 e0       	ldi	r19, 0x00	; 0
-    16c0:	02 e0       	ldi	r16, 0x02	; 2
-    16c2:	0e 94 47 08 	call	0x108e	; 0x108e <xTaskCreate>
+    1736:	8a eb       	ldi	r24, 0xBA	; 186
+    1738:	9a e0       	ldi	r25, 0x0A	; 10
+    173a:	60 e0       	ldi	r22, 0x00	; 0
+    173c:	70 e0       	ldi	r23, 0x00	; 0
+    173e:	44 e6       	ldi	r20, 0x64	; 100
+    1740:	50 e0       	ldi	r21, 0x00	; 0
+    1742:	20 e0       	ldi	r18, 0x00	; 0
+    1744:	30 e0       	ldi	r19, 0x00	; 0
+    1746:	02 e0       	ldi	r16, 0x02	; 2
+    1748:	0e 94 47 08 	call	0x108e	; 0x108e <xTaskCreate>
 
 	//Create a binary semaphore
 	vSemaphoreCreateBinary(BS);
-    16c6:	81 e0       	ldi	r24, 0x01	; 1
-    16c8:	60 e0       	ldi	r22, 0x00	; 0
-    16ca:	0e 94 33 05 	call	0xa66	; 0xa66 <xQueueCreate>
-    16ce:	90 93 81 04 	sts	0x0481, r25
-    16d2:	80 93 80 04 	sts	0x0480, r24
-    16d6:	00 97       	sbiw	r24, 0x00	; 0
-    16d8:	39 f0       	breq	.+14     	; 0x16e8 <main+0x8c>
-    16da:	60 e0       	ldi	r22, 0x00	; 0
-    16dc:	70 e0       	ldi	r23, 0x00	; 0
-    16de:	40 e0       	ldi	r20, 0x00	; 0
-    16e0:	50 e0       	ldi	r21, 0x00	; 0
-    16e2:	20 e0       	ldi	r18, 0x00	; 0
-    16e4:	0e 94 8f 04 	call	0x91e	; 0x91e <xQueueGenericSend>
+    174c:	81 e0       	ldi	r24, 0x01	; 1
+    174e:	60 e0       	ldi	r22, 0x00	; 0
+    1750:	0e 94 33 05 	call	0xa66	; 0xa66 <xQueueCreate>
+    1754:	90 93 84 04 	sts	0x0484, r25
+    1758:	80 93 83 04 	sts	0x0483, r24
+    175c:	00 97       	sbiw	r24, 0x00	; 0
+    175e:	39 f0       	breq	.+14     	; 0x176e <main+0x8c>
+    1760:	60 e0       	ldi	r22, 0x00	; 0
+    1762:	70 e0       	ldi	r23, 0x00	; 0
+    1764:	40 e0       	ldi	r20, 0x00	; 0
+    1766:	50 e0       	ldi	r21, 0x00	; 0
+    1768:	20 e0       	ldi	r18, 0x00	; 0
+    176a:	0e 94 8f 04 	call	0x91e	; 0x91e <xQueueGenericSend>
 
-	//queueLa = xQueueCreate( 5, sizeof( int32_t ) );
+	// Create a Message Queue
+	TQ = xQueueCreate(1, sizeof(char));
+    176e:	81 e0       	ldi	r24, 0x01	; 1
+    1770:	61 e0       	ldi	r22, 0x01	; 1
+    1772:	0e 94 33 05 	call	0xa66	; 0xa66 <xQueueCreate>
+    1776:	90 93 82 04 	sts	0x0482, r25
+    177a:	80 93 81 04 	sts	0x0481, r24
 
 	//start the scheduler
 	vTaskStartScheduler();
-    16e8:	0e 94 33 09 	call	0x1266	; 0x1266 <vTaskStartScheduler>
+    177e:	0e 94 33 09 	call	0x1266	; 0x1266 <vTaskStartScheduler>
 
 	return 0;
 }
-    16ec:	80 e0       	ldi	r24, 0x00	; 0
-    16ee:	90 e0       	ldi	r25, 0x00	; 0
-    16f0:	0f 91       	pop	r16
-    16f2:	ff 90       	pop	r15
-    16f4:	ef 90       	pop	r14
-    16f6:	08 95       	ret
+    1782:	80 e0       	ldi	r24, 0x00	; 0
+    1784:	90 e0       	ldi	r25, 0x00	; 0
+    1786:	0f 91       	pop	r16
+    1788:	ff 90       	pop	r15
+    178a:	ef 90       	pop	r14
+    178c:	08 95       	ret
 
-000016f8 <memcpy>:
-    16f8:	fb 01       	movw	r30, r22
-    16fa:	dc 01       	movw	r26, r24
-    16fc:	02 c0       	rjmp	.+4      	; 0x1702 <memcpy+0xa>
-    16fe:	01 90       	ld	r0, Z+
-    1700:	0d 92       	st	X+, r0
-    1702:	41 50       	subi	r20, 0x01	; 1
-    1704:	50 40       	sbci	r21, 0x00	; 0
-    1706:	d8 f7       	brcc	.-10     	; 0x16fe <memcpy+0x6>
-    1708:	08 95       	ret
+0000178e <memcpy>:
+    178e:	fb 01       	movw	r30, r22
+    1790:	dc 01       	movw	r26, r24
+    1792:	02 c0       	rjmp	.+4      	; 0x1798 <memcpy+0xa>
+    1794:	01 90       	ld	r0, Z+
+    1796:	0d 92       	st	X+, r0
+    1798:	41 50       	subi	r20, 0x01	; 1
+    179a:	50 40       	sbci	r21, 0x00	; 0
+    179c:	d8 f7       	brcc	.-10     	; 0x1794 <memcpy+0x6>
+    179e:	08 95       	ret
 
-0000170a <memset>:
-    170a:	dc 01       	movw	r26, r24
-    170c:	01 c0       	rjmp	.+2      	; 0x1710 <memset+0x6>
-    170e:	6d 93       	st	X+, r22
-    1710:	41 50       	subi	r20, 0x01	; 1
-    1712:	50 40       	sbci	r21, 0x00	; 0
-    1714:	e0 f7       	brcc	.-8      	; 0x170e <memset+0x4>
-    1716:	08 95       	ret
+000017a0 <memset>:
+    17a0:	dc 01       	movw	r26, r24
+    17a2:	01 c0       	rjmp	.+2      	; 0x17a6 <memset+0x6>
+    17a4:	6d 93       	st	X+, r22
+    17a6:	41 50       	subi	r20, 0x01	; 1
+    17a8:	50 40       	sbci	r21, 0x00	; 0
+    17aa:	e0 f7       	brcc	.-8      	; 0x17a4 <memset+0x4>
+    17ac:	08 95       	ret
 
-00001718 <strncpy>:
-    1718:	fb 01       	movw	r30, r22
-    171a:	dc 01       	movw	r26, r24
-    171c:	41 50       	subi	r20, 0x01	; 1
-    171e:	50 40       	sbci	r21, 0x00	; 0
-    1720:	48 f0       	brcs	.+18     	; 0x1734 <strncpy+0x1c>
-    1722:	01 90       	ld	r0, Z+
-    1724:	0d 92       	st	X+, r0
-    1726:	00 20       	and	r0, r0
-    1728:	c9 f7       	brne	.-14     	; 0x171c <strncpy+0x4>
-    172a:	01 c0       	rjmp	.+2      	; 0x172e <strncpy+0x16>
-    172c:	1d 92       	st	X+, r1
-    172e:	41 50       	subi	r20, 0x01	; 1
-    1730:	50 40       	sbci	r21, 0x00	; 0
-    1732:	e0 f7       	brcc	.-8      	; 0x172c <strncpy+0x14>
-    1734:	08 95       	ret
+000017ae <strncpy>:
+    17ae:	fb 01       	movw	r30, r22
+    17b0:	dc 01       	movw	r26, r24
+    17b2:	41 50       	subi	r20, 0x01	; 1
+    17b4:	50 40       	sbci	r21, 0x00	; 0
+    17b6:	48 f0       	brcs	.+18     	; 0x17ca <strncpy+0x1c>
+    17b8:	01 90       	ld	r0, Z+
+    17ba:	0d 92       	st	X+, r0
+    17bc:	00 20       	and	r0, r0
+    17be:	c9 f7       	brne	.-14     	; 0x17b2 <strncpy+0x4>
+    17c0:	01 c0       	rjmp	.+2      	; 0x17c4 <strncpy+0x16>
+    17c2:	1d 92       	st	X+, r1
+    17c4:	41 50       	subi	r20, 0x01	; 1
+    17c6:	50 40       	sbci	r21, 0x00	; 0
+    17c8:	e0 f7       	brcc	.-8      	; 0x17c2 <strncpy+0x14>
+    17ca:	08 95       	ret
 
-00001736 <_exit>:
-    1736:	f8 94       	cli
+000017cc <_exit>:
+    17cc:	f8 94       	cli
 
-00001738 <__stop_program>:
-    1738:	ff cf       	rjmp	.-2      	; 0x1738 <__stop_program>
+000017ce <__stop_program>:
+    17ce:	ff cf       	rjmp	.-2      	; 0x17ce <__stop_program>

@@ -17,15 +17,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   6 .debug_abbrev 0000095b  00000000  00000000  00003a18  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00001990  00000000  00000000  00004373  2**0
+  7 .debug_line   0000190e  00000000  00000000  00004373  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000003b0  00000000  00000000  00005d04  2**2
+  8 .debug_frame  000003b0  00000000  00000000  00005c84  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000d1b  00000000  00000000  000060b4  2**0
+  9 .debug_str    00000d0e  00000000  00000000  00006034  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000e50  00000000  00000000  00006dcf  2**0
+ 10 .debug_loc    00000e50  00000000  00000000  00006d42  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000018  00000000  00000000  00007c1f  2**0
+ 11 .debug_ranges 00000018  00000000  00000000  00007b92  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -4354,14 +4354,14 @@ void LimitSwitch(void *pvParameters)
 	while (1)
 	{
 		// If the binary semaphore was created successfully
-		if(BS != NULL)
+		if(BS != NULL) //****   check wether semaphore is created successfully
     1574:	80 91 80 04 	lds	r24, 0x0480
     1578:	90 91 81 04 	lds	r25, 0x0481
     157c:	00 97       	sbiw	r24, 0x00	; 0
     157e:	d1 f0       	breq	.+52     	; 0x15b4 <LimitSwitch+0x40>
 		{
 			//if binary semaphore is taken, wait 1 tick to see if it becomes free
-			if(xSemaphoreTake(BS,1) == pdTRUE)
+			if(xSemaphoreTake(BS,1) == pdTRUE) //****
     1580:	60 e0       	ldi	r22, 0x00	; 0
     1582:	70 e0       	ldi	r23, 0x00	; 0
     1584:	41 e0       	ldi	r20, 0x01	; 1
@@ -4371,13 +4371,13 @@ void LimitSwitch(void *pvParameters)
     158e:	81 30       	cpi	r24, 0x01	; 1
     1590:	89 f4       	brne	.+34     	; 0x15b4 <LimitSwitch+0x40>
 			{
-				PORTB |= (1<<PB0);
+				PORTB |= (1<<PB0); //****
     1592:	28 9a       	sbi	0x05, 0	; 5
-				PORTB |= (1<<PB7);
+				PORTB |= (1<<PB7); //****
     1594:	2f 9a       	sbi	0x05, 7	; 5
 
 				//Give semaphore
-				xSemaphoreGive(BS);
+				xSemaphoreGive(BS); //****
     1596:	80 91 80 04 	lds	r24, 0x0480
     159a:	90 91 81 04 	lds	r25, 0x0481
     159e:	60 e0       	ldi	r22, 0x00	; 0
@@ -4392,7 +4392,7 @@ void LimitSwitch(void *pvParameters)
     15b0:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
 			}
 		}
-		taskYIELD();
+		taskYIELD(); //****
     15b4:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
     15b8:	dd cf       	rjmp	.-70     	; 0x1574 <LimitSwitch>
 
@@ -4402,7 +4402,7 @@ void LimitSwitchMonitoring(void *pvParameters)
   	while (1)
 	{ 
 		// If the binary semaphore was created successfully
-		if ( BS != NULL)
+		if (BS != NULL) //****  check wether semaphore is created successfully
     15ba:	80 91 80 04 	lds	r24, 0x0480
     15be:	90 91 81 04 	lds	r25, 0x0481
     15c2:	00 97       	sbiw	r24, 0x00	; 0
@@ -4410,7 +4410,7 @@ void LimitSwitchMonitoring(void *pvParameters)
 		{
 			//Take the semaphore - don't block if the semaphore is not
         	//immediately available.
-			xSemaphoreTake(BS,1);
+			xSemaphoreTake(BS,1); //****
     15c6:	60 e0       	ldi	r22, 0x00	; 0
     15c8:	70 e0       	ldi	r23, 0x00	; 0
     15ca:	41 e0       	ldi	r20, 0x01	; 1
@@ -4419,14 +4419,14 @@ void LimitSwitchMonitoring(void *pvParameters)
     15d0:	0e 94 c3 03 	call	0x786	; 0x786 <xQueueGenericReceive>
 			
 			//if both limit switch are pressed
-			if( !(PIND & (1<<PD0)) && !(PIND & (1<<PD1)))
+			if( !(PIND & (1<<PD0)) && !(PIND & (1<<PD1))) //****
     15d4:	48 99       	sbic	0x09, 0	; 9
     15d6:	0e c0       	rjmp	.+28     	; 0x15f4 <LimitSwitchMonitoring+0x3a>
     15d8:	49 99       	sbic	0x09, 1	; 9
     15da:	0c c0       	rjmp	.+24     	; 0x15f4 <LimitSwitchMonitoring+0x3a>
 			{ 
 				//Give semaphore
-				xSemaphoreGive(BS);
+				xSemaphoreGive(BS); //****
     15dc:	80 91 80 04 	lds	r24, 0x0480
     15e0:	90 91 81 04 	lds	r25, 0x0481
     15e4:	60 e0       	ldi	r22, 0x00	; 0
@@ -4439,13 +4439,13 @@ void LimitSwitchMonitoring(void *pvParameters)
 			}
 			else
 			{
-				PORTB &= ~(1<<PB0);
+				PORTB &= ~(1<<PB0); //****
     15f4:	28 98       	cbi	0x05, 0	; 5
-				PORTB &= ~(1<<PB7);
+				PORTB &= ~(1<<PB7); //****
     15f6:	2f 98       	cbi	0x05, 7	; 5
 			}
 		}
-		taskYIELD();
+		taskYIELD(); //****
     15f8:	0e 94 61 0a 	call	0x14c2	; 0x14c2 <vPortYield>
     15fc:	de cf       	rjmp	.-68     	; 0x15ba <LimitSwitchMonitoring>
 
@@ -4518,27 +4518,27 @@ void MOTORS (void *pvParameters) {
 //Modify based on the given pseudocode
 void LED (void *pvParameters) {
 	while(1) {
-        PORTB &= ~(1<<PB2);
+        PORTB &= ~(1<<PB2);	//****
     1636:	2a 98       	cbi	0x05, 2	; 5
-        PORTB |= (1<<PB3);
+        PORTB |= (1<<PB3); //****
     1638:	2b 9a       	sbi	0x05, 3	; 5
-        PORTB |= (1<<PB4);
+        PORTB |= (1<<PB4);	//****
     163a:	2c 9a       	sbi	0x05, 4	; 5
-        PORTB &= ~(1<<PB5);
+        PORTB &= ~(1<<PB5);	//****
     163c:	2d 98       	cbi	0x05, 5	; 5
-        vTaskDelay(20);
+        vTaskDelay(20);	//****
     163e:	84 e1       	ldi	r24, 0x14	; 20
     1640:	90 e0       	ldi	r25, 0x00	; 0
     1642:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
-		PORTB |= (1<<PB2);
+		PORTB |= (1<<PB2);	//****
     1646:	2a 9a       	sbi	0x05, 2	; 5
-        PORTB &= ~(1<<PB3);
+        PORTB &= ~(1<<PB3);	//****
     1648:	2b 98       	cbi	0x05, 3	; 5
-        PORTB &= ~(1<<PB4);
+        PORTB &= ~(1<<PB4);	//****
     164a:	2c 98       	cbi	0x05, 4	; 5
-		PORTB |= (1<<PB5);
+		PORTB |= (1<<PB5);	//****
     164c:	2d 9a       	sbi	0x05, 5	; 5
-		vTaskDelay(20);
+		vTaskDelay(20);	//****
     164e:	84 e1       	ldi	r24, 0x14	; 20
     1650:	90 e0       	ldi	r25, 0x00	; 0
     1652:	0e 94 ac 07 	call	0xf58	; 0xf58 <vTaskDelay>
